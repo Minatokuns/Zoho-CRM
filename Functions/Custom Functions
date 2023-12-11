@@ -1,0 +1,30 @@
+deal = zoho.crm.getRecordById("Deals",deal_id);
+// Get the layout name of the deal
+layoutType = ifnull(ifnull(deal.getJSON("Layout"),Map()).getJSON("name"),"");
+info layoutType;
+// Get the account name from the "Account Name" field
+accountName = deal.get("Account_Name");
+// Create a map with the new data for the appropriate account field
+updateData = Map();
+if(layoutType == "Parent Deal")
+{
+	// Replace with the actual layout name for parent deals
+	updateData.put("Account_Parent",accountName);
+	// Replace with the actual API name of the parent account field
+	updateData.put("Account_Child","");
+	// Clear the child account field
+}
+else if(layoutType == "Child Deal")
+{
+	// Replace with the actual layout name for child deals
+	updateData.put("Account_Child",accountName);
+	// Replace with the actual API name of the child account field
+	updateData.put("Account_Parent","");
+	// Clear the parent account field
+}
+// Update the deal record
+updateResponse = zoho.crm.updateRecord("Deals",deal.get("id"),updateData);
+
+The provided script is intended to update Zoho CRM records, specifically those in the "Deals" module. It begins by fetching the details of a specific deal using its ID. Then, it extracts the layout type, which appears to be "Parent Deal" or "Child Deal," and the associated account name. Depending on the layout type, it updates the corresponding account fields in the CRM record and clears the other field.
+
+This script could be used in scenarios where deals in Zoho CRM are associated with parent or child accounts, and the script ensures that the account fields are correctly updated based on the layout type of the deal. This kind of automation can be valuable in maintaining accurate data and streamlining CRM processes.
