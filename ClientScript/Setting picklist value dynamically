@@ -1,0 +1,35 @@
+// Set the value of the 'Visit_Purpose' field to 'Deal'
+var purpose = ZDK.Page.getField('Visit_Purpose');
+purpose.setValue('Deal');
+
+// Get the value of the 'Deal' field
+var deal = ZDK.Page.getField('Deal');
+var dealValue = deal.getValue();
+
+// Check if the 'Deal' field has a value
+if (dealValue != null) {
+    return; // Stop execution here
+} else {
+    // If 'Deal' is null, set the 'Visit_Purpose' to 'Lead'
+    purpose.setValue('Lead');
+    
+    // Get the value of the 'Lead' field
+    var lead = ZDK.Page.getField('Lead');
+    var leadValue = lead.getValue();
+    
+    // Check if the 'Lead' field has a value
+    if (leadValue != null) {
+        return; // Stop execution here
+    } else {
+        // If both 'Deal' and 'Lead' are null, set 'Visit_Purpose' to '-None-'
+        purpose.setValue('-None-');
+    }
+}
+
+
+***Explanation
+The script starts by setting the 'Visit_Purpose' field to 'Deal'.
+It then checks if the 'Deal' field has a value. If it does, the script stops execution.
+If the 'Deal' field is null, it sets the 'Visit_Purpose' to 'Lead'.
+It checks if the 'Lead' field has a value. If it does, the script stops execution.
+If both 'Deal' and 'Lead' are null, it sets 'Visit_Purpose' to '-None-'.
