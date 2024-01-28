@@ -1,0 +1,44 @@
+// Get the 'Last_Name' field value from the lead record
+leadName = zoho.crm.getRecordById("Leads", lid).get("Last_Name");
+
+// Check if 'Last_Name' contains "@" and "."
+if (leadName.contains("@") == true && leadName.contains(".") == true) {
+    
+    // Extract the substring before the "@" symbol
+    formattedName = leadName.toString().getPrefix("@");
+    info formattedName;
+    final = formattedName;
+
+    // Check if the extracted name contains "."
+    if (formattedName.tostring().contains(".") == true) {
+        final = List();
+        formattedName = formattedName.tostring().toList(".");
+        
+        // Iterate through each word and add a space after each
+        for each word in formattedName {
+            val = word.tostring() + " ";
+            final.add(val);
+        }
+    }
+    
+    // Convert the final list to a string and remove ","
+    final = final.tostring().remove(",");
+    info "final >> " + final;
+    
+    // Create a map for the field to be updated
+    update = Map();
+    update.put("Last_Name", final);
+    
+    // Update the lead record with the modified 'Last_Name'
+    zoho.crm.updateRecord("Leads", lid, update);
+}
+
+
+***Explanation
+Get Last Name: Retrieve the 'Last_Name' field value from the lead record.
+Check for "@" and ".": Verify if 'Last_Name' contains "@" and ".".
+Extract Name: If the condition is met, extract the substring before the "@" symbol.
+Check for "." in Extracted Name: Check if the extracted name contains ".".
+Split and Iterate: If "." is present, split the name into a list of words, iterate through each word, and add a space after each.
+Convert to String and Remove ",": Convert the final list to a string and remove any commas.
+Update Record: Create a map with the modified 'Last_Name' and update the lead record.
