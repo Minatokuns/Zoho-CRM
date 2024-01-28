@@ -1,0 +1,14 @@
+record = zoho.crm.getRecordById("Assets",aid);
+// Getting the "Date" field from the record
+date = record.get("Support_Start_Date");
+// Parse the date as a date object
+dateObject = date.toDate();
+// Add 365 days to the date
+updatedDate = dateObject.addDay(364);
+// Create a map to update the "Update_date" field
+updateData = Map();
+updateData.put("Warranty_End_Date",updatedDate);
+// Update the record with the new "Update_date" value
+updateResponse = zoho.crm.updateRecord("Assets",record.get("id"),updateData);
+// Check the update response (you can add error handling here)
+info updateResponse;
