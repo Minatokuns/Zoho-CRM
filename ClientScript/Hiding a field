@@ -1,0 +1,10 @@
+// Get the 'Account_Num' field
+var cali = ZDK.Page.getField('Account_Num');
+
+// Set the visibility of the 'Account_Num' field to false, hiding it
+cali.setVisibility(false);
+
+
+***Explanation
+Get Field: It retrieves the 'Account_Num' field on the Zendesk CRM page.
+Set Visibility: The setVisibility(false) method is then used to set the visibility of the 'Account_Num' field to false, effectively hiding it on the user interface.
