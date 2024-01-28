@@ -1,0 +1,22 @@
+// Get the value of the "Stage" field using the Zendesk API
+var stage = ZDK.Page.getField("Stage").getValue();
+
+// Get the value of the "Service_Start" field using the Zendesk API
+var service = ZDK.Page.getField("Service_Start").getValue();
+
+// Check if the stage is "Contract sent" or "Closed Won" and the "Service_Start" field is null
+if (stage == "Contract sent" || stage == "Closed Won") {
+    if (service == null) {
+        // Set the "Service_Start" field to the current date
+        var now = Date.now();
+        log(now); // You may want to log the timestamp for debugging purposes
+        var date = new Date(now);
+        var formattedDate = date.toISOString().split('T')[0];
+        ZDK.Page.getField('Service_Start').setValue(formattedDate);
+
+        // Calculate the "Service_End" date as 364 days after the "Service_Start" date
+        date.setDate(date.getDate() + 364);
+        var formattedEndDate = date.toISOString().split('T')[0];
+        ZDK.Page.getField('Service_End').setValue(formattedEndDate);
+    }
+}
