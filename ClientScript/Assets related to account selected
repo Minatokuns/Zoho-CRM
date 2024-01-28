@@ -1,0 +1,16 @@
+// Get the 'name' property from the 'Account' field value
+var accountname = ZDK.Page.getField('Account').getValue().name;
+
+// Replace parentheses in the account name with spaces
+accountname = accountname.replace(/[\(\)]/g, " ");
+
+// Get the 'Asset' field
+var asset = ZDK.Page.getField('Asset');
+
+// Set criteria for the 'Asset' field based on the modified account name
+asset.setCriteria("(Account_Name:equals:" + accountname + ")", { filterOnSearch: true });
+
+***Explanation
+Get Account Name: It retrieves the 'name' property from the 'Account' field value.
+Replace Parentheses: The script replaces any parentheses in the 'accountname' with spaces.
+Set Criteria for Asset Field: The 'Asset' field criteria is set based on the modified 'accountname'. This is done to filter or search for assets associated with the modified account name.
