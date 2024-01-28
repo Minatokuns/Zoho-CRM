@@ -1,0 +1,11 @@
+	In Customer Asset, the primary contact of the deal is present as contact name . We are mapping that field with current User field.
+
+record = zoho.crm.getRecordById("Assets",asset_id);
+//Getting the Asset records
+contactName = record.get("Contact_Name");
+//Getting the contact name from that record
+updateData = Map();
+updateData.put("Current_User",contactName);
+//putting the contact name in current user
+updateResponse = zoho.crm.updateRecord("Assets",record.get("id"),updateData);
+//updating the record
