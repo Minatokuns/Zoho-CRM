@@ -1,0 +1,33 @@
+// Check if the "Deal" field on the page has a value. If not, return.
+var check = ZDK.Page.getField("Deal").getValue();
+if (check == null)
+    return;
+
+// Fetch the deal information based on the deal ID from the "Deal" field.
+var dId = ZDK.Page.getField("Deal").getValue().id;
+var deal = ZDK.Apps.CRM.Deals.fetchById(dId);
+
+// Set the "Account" field on the page with information from the fetched deal.
+var lookName = deal.Account_Name().Account_Name;
+var lookId = deal.Account_Name_Lookup_Id;
+ZDK.Page.getField("Account").setValue({ "id": lookId, "name": lookName });
+
+// Retrieve the account name from the "Account" field and perform string manipulation.
+var acc = ZDK.Page.getField('Account').getValue();
+var accountname = acc.name;
+console.log("Original account name: ", accountname);
+
+// Replace parentheses in the account name with spaces.
+accountname = accountname.replace(/[\(\)]/g, " ");
+console.log("Modified account name: ", accountname);
+
+// Set criteria for subform fields based on the modified account name.
+// This is done for Additional_Attendees_1 to Additional_Attendees_5 fields.
+for (var i = 1; i <= 5; i++) {
+    var attendeeField = ZDK.Page.getSubform("Visit_Log1").getField('Additional_Attendees_' + i);
+    attendeeField.setCriteria("(Account_Name:equals:" + accountname + ")", { filterOnSearch: true });
+    console.log("Criteria set for Additional_Attendees_" + i);
+}
+
+***Explanation
+Filtering fields in Subforms and normal fields.
