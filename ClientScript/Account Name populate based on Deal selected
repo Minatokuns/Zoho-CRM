@@ -1,0 +1,25 @@
+// Get the ID of the deal from the "Parent_Deal_Name" field
+var dId = ZDK.Page.getField("Parent_Deal_Name").getValue().id;
+
+// Fetch the deal information using the deal ID
+var deal = ZDK.Apps.CRM.Deals.fetchById(dId);
+
+// Retrieve the account name from the fetched deal
+var lookName = deal.Account_Name().Account_Name;
+
+// Get the lookup ID of the account from the fetched deal
+var lookId = deal.Account_Name_Lookup_Id;
+
+// Set the value of the "Account_Name" field on the current page
+ZDK.Page.getField("Account_Name").setValue({ "id": lookId, "name": lookName });
+
+***Explanation
+Deal ID Retrieval: ZDK.Page.getField("Parent_Deal_Name").getValue().id retrieves the ID of the deal from the "Parent_Deal_Name" field.
+
+Deal Fetching: ZDK.Apps.CRM.Deals.fetchById(dId) fetches the deal information using the retrieved deal ID.
+
+Account Name Retrieval: deal.Account_Name().Account_Name gets the account name from the fetched deal.
+
+Lookup ID Retrieval: deal.Account_Name_Lookup_Id retrieves the lookup ID of the account from the fetched deal.
+
+Setting Account Name: ZDK.Page.getField("Account_Name").setValue({ "id": lookId, "name": lookName }) sets the value of the "Account_Name" field on the current page with the retrieved account information.
