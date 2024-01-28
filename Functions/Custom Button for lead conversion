@@ -1,0 +1,44 @@
+// Get lead record by its ID
+resp = zoho.crm.getRecordById("Leads", lid);
+
+// Get email and secondary email from the lead record
+email = ifnull(resp.get("Email"), "");
+secemail = ifnull(resp.get("Secondary_Email"), "");
+
+// Check if secondary email is empty
+if (secemail == "") {
+    // If secondary email is empty, search for contacts with the primary email
+    relcon = zoho.crm.searchRecords("Contacts", "((Email:equals:" + email + ")or(Secondary_Email:equals:" + email + "))");
+
+    // Check if no matching contacts found
+    if (relcon.size() == 0) {
+        // Convert the lead
+        convert = zoho.crm.convertLead(lid);
+        info convert;
+        return "success";
+    } else {
+        return "email already exists";
+    }
+} else {
+    // If secondary email is not empty, search for contacts with both primary and secondary emails
+    relcon = zoho.crm.searchRecords("Contacts", "((Email:equals:" + email + ")or(Secondary_Email:equals:" + email + ") or (Email:equals:" + secemail + ")or (Secondary_Email:equals:" + secemail + "))");
+
+    // Check if no matching contacts found
+    if (relcon.size() == 0) {
+        // Convert the lead
+        convert = zoho.crm.convertLead(lid);
+        info convert;
+        return "success";
+    } else {
+        return "email already exists";
+    }
+}
+
+
+***Explanation
+Get Lead Record: Fetch the lead record by its ID.
+Get Emails: Retrieve the email and secondary email from the lead record.
+Check Secondary Email: If the secondary email is empty, search for contacts with the primary email.
+Check for Existing Contacts: If no matching contacts are found, convert the lead. Otherwise, return "email already exists."
+Check Both Emails: If the secondary email is not empty, search for contacts with both primary and secondary emails.
+Check for Existing Contacts: If no matching contacts are found, convert the lead. Otherwise, return "email already exists."
