@@ -1,0 +1,17 @@
+// Get the value of the "Stage" field using the API
+var stage = ZDK.Page.getField("Stage").getValue();
+
+// Check if the value of the "Stage" field is "Closed Won"
+if (stage == "Closed Won") {
+    // Get the current timestamp in milliseconds
+    var now = Date.now();
+
+    // Create a new Date object using the current timestamp
+    var date = new Date(now);
+
+    // Format the date as a string in ISO format (YYYY-MM-DD)
+    var formattedDate = date.toISOString().split('T')[0];
+
+    // Set the value of the "Closing_Date" field to the formatted date
+    ZDK.Page.getField('Closing_Date').setValue(formattedDate);
+}
