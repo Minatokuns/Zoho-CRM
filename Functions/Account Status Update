@@ -1,0 +1,20 @@
+Account Status Update to customer if deal is won and Status is prospect.
+
+deal = zoho.crm.getRecordById("Deals",dealid);
+accountId = ifnull(ifnull(deal.getJSON("Account_Name"),Map()).getJSON("id"),"");
+updateStatus = Map();
+if(accountId > 0)
+{
+	// Retrieve the Account record
+	account = zoho.crm.getRecordById("Accounts",accountId);
+	if(account != null)
+	{
+		accountType = account.getJSON("Account_Type");
+		newStatus = "Customer";
+		if(accountType == "Prospect")
+		{
+			updateStatus.put("Account_Type",newStatus);
+		}
+	}
+}
+updateResponse = zoho.crm.updateRecord("Accounts",accountId,updateStatus);
