@@ -1,0 +1,39 @@
+// Get the deal ID from the "Deal" field on the page
+var dId = ZDK.Page.getField("Deal").getValue().id;
+
+// Fetch information about the deal using the deal ID
+var deal = ZDK.Apps.CRM.Deals.fetchById(dId);
+
+// Get the parent deal ID from the fetched deal
+var pdealId = deal.Parent_Deal_Name_Lookup_Id;
+log("Parent Deal ID: ", pdealId);
+
+// Fetch information about the parent deal using the parent deal ID
+var pdeal = ZDK.Apps.CRM.Deals.fetchById(pdealId);
+console.log("Parent Deal Information: ", pdeal);
+
+// Get the primary contact name from the parent deal
+var pName = pdeal.Primary_Contact_Name;
+console.log("Primary Contact Name: ", pName);
+
+// Get the contact ID associated with the primary contact from the parent deal
+var pId = pdeal.Contact_Name_Lookup_Id;
+console.log("Primary Contact ID: ", pId);
+
+// Fetch information about the contact using the contact ID
+var cont = ZDK.Apps.CRM.Contacts.fetchById(pId);
+console.log("Contact Information: ", cont);
+
+// Get the full name of the contact
+var contactName = cont.Full_Name;
+
+// Set the value of the "Primary_Contact" field on the current page with the contact information
+ZDK.Page.getField("Primary_Contact").setValue({ "id": pId, "name": contactName });
+
+***Explanation
+The script retrieves the deal ID from the "Deal" field on the page.
+It then fetches details about the deal using the fetched deal ID.
+The script obtains the parent deal ID from the deal and fetches information about the parent deal.
+Primary contact details (name and ID) are obtained from the parent deal.
+Information about the contact is fetched using the contact ID.
+The script sets the value of the "Primary_Contact" field on the current page with the contact information.
